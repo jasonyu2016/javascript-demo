@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html, body {
+            height: 3000px;
+            background: -webkit-linear-gradient(top,#1abac3,#ffffff);
+        }
+        a {
+            width: 42px;
+            height: 42px;
+            line-height: 42px;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background: rgba(0,0,0,.3);
+            color: #ffffff;
+            text-decoration: none;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            font-size: 12px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="javascript:void(0)" id="top">回顶部</a>
+    <script>
+        var top = document.getElementById("top");
+        var timer = null;
+        //屏幕滚动一定距离显示回到顶部按钮
+        window.onscroll = function () {
+            var top = document.getElementById("top");
+            if(scroll().top > 300) {
+                top.style.display = "block";
+            } else {
+                top.style.display = "none";
+            }
+        }
+
+        //点击返回顶部
+        top.onclick = function () {            
+            //获取当前卷去距离
+            var scrollHide = scroll().top;
+            var step = scrollHide / 30;  
+            timer = setInterval(function(){
+                scrollHide -= step;
+                window.scrollTo(0,scrollHide);
+                if(scrollHide <= 0) {
+                    clearInterval(timer);
+                    alert("已返回顶部")
+                }
+            },15)
+        }
+
+        function scroll() {
+            return {
+                top : window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+                left : window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
+            }
+        }
+    </script>
+</body>
+</html>
